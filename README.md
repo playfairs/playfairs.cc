@@ -65,6 +65,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - your.email@example.com
+Your Name - heresy@playfairs.cc
 
-Project Link: [https://github.com/yourusername/biolink](https://github.com/yourusername/biolink)
+Project Link: [https://github.com/playfairs/biolink](https://github.com/playfairs/biolink)
