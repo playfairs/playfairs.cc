@@ -1,40 +1,70 @@
-# Welcome to Remix!
+# BioLink
 
-- 📖 [Remix docs](https://remix.run/docs)
+## Overview
 
-## Development
+BioLink is a modern, professional digital identity platform that allows users to create and share a comprehensive professional profile.
 
-Run the dev server:
+## Features
 
-```shellscript
+- Create a personalized professional profile
+- Simple and intuitive user interface
+- Secure authentication
+- Responsive design
+
+## Tech Stack
+
+- Remix (React Framework)
+- Tailwind CSS
+- TypeScript
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or later)
+- npm
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/biolink.git
+cd biolink
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Run the development server
+```bash
 npm run dev
 ```
 
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
 ## Deployment
 
-First, build your app for production:
-
-```sh
+```bash
 npm run build
-```
-
-Then run the app in production mode:
-
-```sh
 npm start
 ```
 
-Now you'll need to pick a host to deploy it to.
+## Contributing
 
-### DIY
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+## License
 
-Make sure to deploy the output of `npm run build`
+Distributed under the MIT License. See `LICENSE` for more information.
 
-- `build/server`
-- `build/client`
+## Contact
 
-## Styling
+Your Name - your.email@example.com
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+Project Link: [https://github.com/yourusername/biolink](https://github.com/yourusername/biolink)
