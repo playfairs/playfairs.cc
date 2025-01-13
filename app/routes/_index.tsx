@@ -79,7 +79,7 @@ export const loader = async () => {
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Playfairs.cc - A simple Biolink made in HTML and CSS" },
+    { title: "pf.cc" },
     { name: "description", content: "Professional networking and showcase platform" },
   ];
 };
