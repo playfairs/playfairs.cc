@@ -40,7 +40,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const { landing: config, githubProjects } = useLoaderData<typeof loader>();
+  const { landing: config, githubProjects } = useLoaderData();
 
   return (
     <div className={`min-h-screen ${config.backgroundColor} ${config.textColor} flex flex-col`}>
