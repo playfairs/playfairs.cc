@@ -1,6 +1,45 @@
 import { Link } from "@remix-run/react";
 import { useLoaderData } from "@remix-run/react";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
+
+// Define the shape of your loader data
+interface LoaderData {
+  landing: {
+    backgroundColor: string;
+    textColor: string;
+    title: string;
+    subtitle: string;
+  };
+  githubProjects: Array<{
+    name: string;
+    url: string;
+    language?: string;
+    stars: number;
+  }>;
+}
+
+export const loader = ({ request }: LoaderFunctionArgs) => {
+  // Placeholder data - replace with your actual data fetching logic
+  const data: LoaderData = {
+    landing: {
+      backgroundColor: 'bg-gray-900',
+      textColor: 'text-white',
+      title: 'Developer Portfolio',
+      subtitle: 'Passionate developer exploring the intersection of technology and creativity.'
+    },
+    githubProjects: [
+      {
+        name: 'Portfolio Site',
+        url: 'https://github.com/playfairs/portfolio',
+        language: 'TypeScript',
+        stars: 0
+      }
+    ]
+  };
+
+  return json(data);
+};
 
 const SOCIAL_LINKS = [
   {
@@ -40,7 +79,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const { landing: config, githubProjects } = useLoaderData();
+  const { landing: config, githubProjects } = useLoaderData<LoaderData>();
 
   return (
     <div className={`min-h-screen ${config.backgroundColor} ${config.textColor} flex flex-col`}>
