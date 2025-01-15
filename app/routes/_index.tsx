@@ -2,6 +2,8 @@ import { Link } from "@remix-run/react";
 import { useLoaderData } from "@remix-run/react";
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
+import { useEffect } from "react";
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
 
 // Define the shape of your loader data
 interface LoaderData {
@@ -19,26 +21,34 @@ interface LoaderData {
   }>;
 }
 
-export const loader = ({ request }: LoaderFunctionArgs) => {
-  // Placeholder data - replace with your actual data fetching logic
-  const data: LoaderData = {
-    landing: {
-      backgroundColor: 'bg-gray-900',
-      textColor: 'text-white',
-      title: 'Developer Portfolio',
-      subtitle: 'Passionate developer exploring the intersection of technology and creativity.'
-    },
-    githubProjects: [
-      {
-        name: 'Portfolio Site',
-        url: 'https://github.com/playfairs/portfolio',
-        language: 'TypeScript',
-        stars: 0
-      }
-    ]
-  };
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  try {
+    // Placeholder data - replace with your actual data fetching logic
+    const data: LoaderData = {
+      landing: {
+        backgroundColor: 'bg-gray-900',
+        textColor: 'text-white',
+        title: 'Developer Portfolio',
+        subtitle: 'Passionate developer exploring the intersection of technology and creativity.'
+      },
+      githubProjects: [
+        {
+          name: 'Portfolio Site',
+          url: 'https://github.com/playfairs/portfolio',
+          language: 'TypeScript',
+          stars: 0
+        }
+      ]
+    };
 
-  return json(data);
+    return json(data);
+  } catch (error) {
+    console.error('Loader Error:', error);
+    throw new Response('Failed to load page data', { 
+      status: 500, 
+      statusText: 'Internal Server Error' 
+    });
+  }
 };
 
 const SOCIAL_LINKS = [
@@ -80,6 +90,18 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const { landing: config, githubProjects } = useLoaderData<LoaderData>();
+
+  // Add client-side error logging
+  useEffect(() => {
+    try {
+      // Validate loaded data
+      if (!config || !githubProjects) {
+        console.error('Invalid data loaded:', { config, githubProjects });
+      }
+    } catch (error) {
+      console.error('Client-side data validation error:', error);
+    }
+  }, [config, githubProjects]);
 
   return (
     <div className={`min-h-screen ${config.backgroundColor} ${config.textColor} flex flex-col`}>
@@ -174,6 +196,57 @@ export default function Index() {
           animation-play-state: paused;
         }
       `}</style>
+    </div>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  // Log the error
+  useEffect(() => {
+    console.error('Route Error:', error);
+  }, [error]);
+
+  // Handle different types of errors
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">
+            {error.status} - {error.statusText}
+          </h1>
+          <p className="text-xl mb-8">
+            {error.data || 'An unexpected error occurred'}
+          </p>
+          <Link 
+            to="/" 
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300"
+          >
+            Return to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle unexpected errors
+  return (
+    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">
+          Unexpected Error
+        </h1>
+        <p className="text-xl mb-8">
+          Something went wrong. Please try again later.
+        </p>
+        <Link 
+          to="/" 
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300"
+        >
+          Return to Home
+        </Link>
+      </div>
     </div>
   );
 }
